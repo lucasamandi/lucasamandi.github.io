@@ -3,93 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Il titolo verrà gestito da Jekyll -->
     <title>{{ page.title }} - {{ site.title }}</title>
+    
+    <!-- Importiamo i font per lo stile "giornale" da Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
         /* --- Stile Generale --- */
         body {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            background-color: #f4f1ea; /* Colore carta invecchiata */
-            color: #333;
+            background-color: #f8f5f0; /* Un bianco carta più caldo */
+            font-family: 'Merriweather', Georgia, serif; /* Font più leggibile e classico */
+            color: #1a1a1a;
             margin: 0;
-            padding: 20px;
+            padding: 1em;
         }
 
-        /* --- Intestazione del Giornale --- */
-        .newspaper-header {
+        /* --- Testata del Giornale (Masthead) --- */
+        .site-header {
             text-align: center;
-            border-bottom: 4px double #333;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
+            padding: 1em 0;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 2em;
         }
-
-        .newspaper-header h1 {
-            font-size: 5vw; /* Dimensione fluida */
-            margin: 0;
-            font-weight: bold;
+        
+        .masthead-top {
+            font-size: 0.8em;
+            color: #666;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            margin-bottom: 1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1em;
         }
 
-        .newspaper-header .subtitle {
-            font-size: 1.2em;
+        .site-header h1 {
+            font-family: 'Playfair Display', "Times New Roman", serif; /* Font elegante per il titolo */
+            font-size: clamp(2.5rem, 10vw, 6rem); /* Dimensione fluida e reattiva */
+            font-weight: 700;
+            margin: 0.1em 0;
+            line-height: 1;
+            color: #111;
+        }
+
+        .site-header hr {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+            margin: 1em 0;
+        }
+
+        /* --- Layout della Prima Pagina con CSS Grid --- */
+        .front-page-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr); /* Griglia a 6 colonne per flessibilità */
+            gap: 2em;
+            grid-template-areas:
+                "hero hero hero hero spalla spalla"
+                "col1 col1 col2 col2 col3 col3";
+        }
+
+        .article-hero { grid-area: hero; }
+        .article-spalla { grid-area: spalla; }
+        .column-1 { grid-area: col1; }
+        .column-2 { grid-area: col2; }
+        .column-3 { grid-area: col3; }
+        
+        .column-border {
+             border-left: 1px solid #ddd;
+             padding-left: 2em;
+        }
+
+        /* --- Stile degli Articoli --- */
+        .article h2 { /* Titolo di sezione, es. "Prima Pagina" */
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.3em;
+            margin-top: 0;
+            margin-bottom: 1em;
+        }
+
+        .article h3 { /* Titolo dell'articolo */
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            line-height: 1.1;
+            margin-top: 0;
+            margin-bottom: 0.2em;
+        }
+        
+        .article-spalla h3, .column-1 h3, .column-2 h3, .column-3 h3 {
+             font-size: 1.6rem; /* Titoli più piccoli per colonne secondarie */
+        }
+        
+        .article .author {
             font-style: italic;
             color: #555;
+            margin-bottom: 1em;
+        }
+
+        .article p {
+            text-align: justify;
+            line-height: 1.7;
+            margin: 0 0 1em 0;
+        }
+
+        .article .lead { /* Primo paragrafo in evidenza */
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #333;
         }
         
-        .newspaper-header .date {
-            font-size: 1em;
-            color: #777;
+        .poem {
+            white-space: pre-wrap;
+            font-style: italic;
+            padding-left: 20px;
+            border-left: 3px solid #ccc;
+            line-height: 1.8;
         }
 
-        /* --- Struttura Principale e Articoli --- */
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
-        }
 
-        .section {
-            padding: 15px;
-            border-left: 1px solid #ccc;
-            padding-left: 25px;
-        }
-        
-        .section:first-child { border-left: none; padding-left: 0; }
-
-        .section h2 {
-            font-size: 1.8em;
-            border-bottom: 2px solid #333;
-            padding-bottom: 5px;
-            margin-top: 0;
-        }
-
-        .article h3 { font-size: 1.4em; margin-bottom: 5px; }
-        .article .author { font-style: italic; color: #666; margin-bottom: 15px; font-size: 0.9em; }
-        .article p { text-align: justify; line-height: 1.6; margin-bottom: 20px; }
-        .poem { white-space: pre-wrap; font-style: italic; padding-left: 20px; border-left: 3px solid #ddd; }
-
-        /* --- Responsività --- */
-        @media (max-width: 900px) {
-            .main-content { grid-template-columns: 1fr; }
-            .section { border-left: none; padding-left: 0; border-bottom: 1px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
+        /* --- Adattabilità per schermi piccoli (Mobile) --- */
+        @media (max-width: 1024px) {
+            .front-page-grid {
+                grid-template-columns: 1fr; /* Una sola colonna */
+                grid-template-areas:
+                    "hero"
+                    "spalla"
+                    "col1"
+                    "col2"
+                    "col3";
+            }
+            .column-border {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 2em;
+                padding-top: 2em;
+                border-top: 1px solid #ddd;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header class="newspaper-header">
-        <!-- Usa i valori dal file _config.yml -->
+    <header class="site-header">
+        <div class="masthead-top">
+            <span class="slogan">{{ site.description }}</span>
+            <span class="date" id="current-date"></span>
+        </div>
         <h1>{{ site.title }}</h1>
-        <div class="subtitle">{{ site.description }}</div>
-        <div class="date" id="current-date"></div>
+        <hr>
     </header>
 
     <main>
-        <!--
-        QUESTO È IL PUNTO MAGICO!
-        Jekyll inserirà qui il contenuto specifico di ogni pagina.
-        -->
+        <!-- Jekyll inserirà qui il contenuto specifico della pagina (il nostro index.md) -->
         {{ content }}
     </main>
     
