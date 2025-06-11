@@ -3,180 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | {{ site.title }}</title>
+    <title>{{ page.title }} | {{ site.newspaper_title }}</title>
     
-    <!-- Importiamo i font per lo stile "Repubblica" (Titillium per i titoli, Merriweather per il testo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Titillium+Web:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Variabili Colore e Stile Globale --- */
+        /* --- Variabili e Stile Globale --- */
         :root {
-            --repubblica-red: #c00;
-            --text-color: #333;
-            --link-color: #0056b3;
-            --border-color: #e5e5e5;
+            --title-font: 'Playfair Display', serif;
+            --text-font: 'Roboto', sans-serif;
+            --main-color: #333;
+            --border-color: #e0e0e0;
         }
-
         body {
-            background-color: #fff;
-            font-family: 'Merriweather', serif;
-            color: var(--text-color);
+            font-family: var(--text-font);
+            color: var(--main-color);
             margin: 0;
-            padding: 0;
+            background-color: #fdfdfd;
         }
+        .container { max-width: 1200px; margin: 0 auto; padding: 1.5em; }
 
-        /* --- Header in Stile Repubblica --- */
-        .site-header {
-            background-color: #fff;
-            padding: 1em 5%;
-            border-bottom: 2px solid var(--repubblica-red);
-        }
+        /* --- Testata a 3 Livelli --- */
+        .site-header { border-bottom: 1px solid var(--border-color); }
         
-        .header-content {
+        /* 1. Barra Superiore (Avatar e Slogan) */
+        .header-top-bar {
             display: flex;
-            justify-content: center; /* Centra il titolo */
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            padding: 0.5em 0;
+            background-color: #f7f7f7;
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .site-title {
-            font-family: 'Titillium Web', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4rem); /* Dimensione reattiva */
-            font-weight: 700;
-            color: var(--repubblica-red);
-            text-decoration: none;
-            margin: 0;
-            padding: 0;
-            line-height: 1;
+        .top-bar-container { display: flex; justify-content: space-between; align-items: center; width: 100%;}
+        .author-info { display: flex; align-items: center; }
+        .author-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #ccc;
         }
+        .author-info .slogan { font-weight: 500; color: #555; }
 
-        .site-nav {
-            width: 100%;
-            border-top: 1px solid var(--border-color);
-            margin-top: 1em;
-            padding-top: 0.5em;
+        /* 2. Testata Principale (Titolo) */
+        .masthead {
             text-align: center;
+            padding: 1.5em 0;
         }
-
-        .site-nav a {
-            font-family: 'Titillium Web', sans-serif;
-            text-decoration: none;
-            color: #444;
-            margin: 0 1em;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        /* --- Contenitore Principale --- */
-        .main-container {
-            max-width: 1280px;
-            margin: 2em auto;
-            padding: 0 1em;
-        }
-
-        /* --- Layout Griglia per gli articoli --- */
-        .front-page-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr); /* Griglia a 12 colonne */
-            gap: 1.5em;
-        }
-
-        .hero-article {
-            grid-column: 1 / span 8; /* L'articolo eroe occupa 8 colonne */
-            border-right: 1px solid var(--border-color);
-            padding-right: 1.5em;
-        }
-
-        .sidebar {
-            grid-column: 9 / span 4; /* La sidebar occupa le restanti 4 */
-        }
-        
-        .sub-articles {
-            grid-column: 1 / -1; /* Occupa tutta la larghezza */
-            margin-top: 2em;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5em;
-        }
-
-        /* --- Stile Articoli --- */
-        .article h2 { /* Titolo dell'articolo */
-            font-family: 'Titillium Web', sans-serif;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            line-height: 1.1;
-            margin: 0 0 0.3em 0;
+        .newspaper-title {
+            font-family: var(--title-font);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            color: #111;
+            margin: 0;
             font-weight: 700;
         }
+
+        /* 3. Barra di Navigazione (Menu Categorie) */
+        .header-nav-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
         
-        .article .category {
-            font-family: 'Titillium Web', sans-serif;
-            font-weight: 600;
-            color: var(--repubblica-red);
+        /* Menu a Ventaglio (Dropdown) */
+        .category-menu { position: relative; }
+        .menu-toggle-button {
+            font-family: var(--text-font);
+            font-weight: 700;
+            font-size: 1rem;
             text-transform: uppercase;
-            font-size: 0.9rem;
-            margin-bottom: 0.5em;
+            background-color: #333;
+            color: #fff;
+            padding: 0.8em 1.5em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
+        .menu-toggle-button:hover { background-color: #555; }
+        .menu-dropdown {
+            display: none; /* Nascosto di default */
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            border: 1px solid #ddd;
+        }
+        .menu-dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .menu-dropdown a:hover { background-color: #f1f1f1; }
+        .show { display: block; } /* Classe per mostrare il menu */
 
-        .article p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            text-align: justify;
+        /* --- Contenuto della pagina --- */
+        .section-title {
+            font-family: var(--title-font);
+            font-size: 2rem;
+            border-bottom: 3px solid var(--main-color);
+            padding-bottom: 0.2em;
+            margin-bottom: 1em;
         }
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+        }
+        .article h3 { font-family: var(--title-font); font-size: 1.5rem; margin-top: 0; }
+        .article .author { font-style: italic; color: #666; margin-bottom: 1em; display: block; }
+        .article p { line-height: 1.6; }
+        .poem { white-space: pre-wrap; font-style: italic; border-left: 2px solid #ccc; padding-left: 1em; line-height: 1.7; }
         
-        /* Stili ridotti per articoli secondari */
-        .sidebar .article h2, .sub-articles .article h2 {
-            font-size: 1.5rem;
+        .read-more-button {
+            display: inline-block;
+            margin-top: 1em;
+            font-weight: 700;
+            text-decoration: none;
+            color: #0056b3;
+            padding: 0.5em 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
         }
+        .read-more-button:hover { border-bottom-color: #0056b3; }
         
-        .poem {
-            font-family: 'Merriweather', serif;
-            font-style: italic;
-            white-space: pre-wrap;
-            line-height: 1.8;
-            padding: 1em;
-            background-color: #f9f9f9;
-            border-left: 3px solid var(--repubblica-red);
-        }
-
-        /* --- Responsività --- */
-        @media (max-width: 900px) {
-            .hero-article {
-                grid-column: 1 / -1;
-                border-right: none;
-                padding-right: 0;
-                border-bottom: 1px solid var(--border-color);
-                padding-bottom: 1.5em;
-            }
-            .sidebar {
-                grid-column: 1 / -1;
-                margin-top: 1.5em;
-            }
-            .sub-articles {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 600px) {
+            .header-top-bar { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+
     <header class="site-header">
-        <div class="header-content">
-            <a href="/" class="site-title">{{ site.title }}</a>
+        <div class="header-top-bar">
+            <div class="container top-bar-container">
+                <div class="author-info">
+                    <!-- SOSTITUISCI CON L'URL DEL TUO AVATAR -->
+                    <img src="https://placehold.co/100x100/EEE/31343C?text=Io" alt="Avatar dell'autore">
+                    <span class="slogan">{{ site.slogan }}</span>
+                </div>
+                <div class="date" id="current-date"></div>
+            </div>
         </div>
-        <nav class="site-nav">
-            <a href="#prima-pagina">Prima Pagina</a>
-            <a href="#cronaca-surreale">Cronaca</a>
-            <a href="#cultura">Cultura</a>
-            <a href="#poesia">Poesia</a>
-        </nav>
+
+        <div class="masthead">
+            <h1 class="newspaper-title">{{ site.newspaper_title }}</h1>
+        </div>
+
+        <div class="header-nav-bar">
+             <div class="container" style="display: flex; justify-content: flex-end;">
+                <div class="category-menu">
+                    <button id="menu-toggle" class="menu-toggle-button">Categorie</button>
+                    <div id="menu-dropdown" class="menu-dropdown">
+                        <a href="#">Surrealismo</a>
+                        <a href="#">Satira</a>
+                        <a href="#">Cronaca Nera (di seppia)</a>
+                        <a href="#">Riflessioni</a>
+                        <a href="#">Poesie</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <div class="main-container">
-        <main>
-            <!-- Jekyll inserirà qui il contenuto della pagina -->
-            {{ content }}
-        </main>
-    </div>
+    <main class="container">
+        {{ content }}
+    </main>
+
+    <script>
+        // Script per la data
+        const dateElement = document.getElementById('current-date');
+        if (dateElement) {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = today.toLocaleDateString('it-IT', options);
+        }
+
+        // Script per il menu a ventaglio
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuDropdown = document.getElementById('menu-dropdown');
+
+        menuToggle.addEventListener('click', function(event) {
+            event.stopPropagation(); // Evita che il click si propaghi al 'document'
+            menuDropdown.classList.toggle('show');
+        });
+
+        // Chiude il menu se si clicca fuori
+        document.addEventListener('click', function(event) {
+            if (!menuToggle.contains(event.target)) {
+                if (menuDropdown.classList.contains('show')) {
+                    menuDropdown.classList.remove('show');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
