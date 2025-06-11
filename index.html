@@ -1,18 +1,69 @@
 ---
 layout: default
+title: Prima Pagina
 ---
 
-<div class="posts">
-  {% for post in site.posts %}
-    <article class="post">
+<div class="main-content">
+    <!-- SEZIONE 1: PRIMA PAGINA / INCHIESTA -->
+    <section class="section" id="prima-pagina">
+        <h2>Prima Pagina</h2>
+        <article>
+            <h3>Interrogato piccione per mancata precedenza a un pensiero</h3>
+            <div class="author">di Tuo Nome</div>
+            <p>
+                Milano. Mattinata di scompiglio in Piazza Duomo, dove un piccione, reo di aver attraversato la traiettoria di un pensiero particolarmente profondo del signor Gualtiero, è stato fermato e condotto in caserma per accertamenti. Il pensiero, descritto come "una fulminante epifania sul senso ultimo dei calzini spaiati", si sarebbe dissolto a causa dell'inattesa interruzione. Le autorità competenti stanno valutando se applicare l'aggravante della futilità del volo.
+            </p>
+        </article>
+        <article>
+            <h3>Scoperto buco nero nel reparto latticini del supermercato</h3>
+             <div class="author">di Tuo Nome</div>
+            <p>
+                Una massaia in cerca di yogurt magro ha segnalato la misteriosa scomparsa di un'intera partita di mozzarelle. Sul posto, fisici teorici hanno confermato la presenza di una singolarità spazio-temporale tra la ricotta e il mascarpone. "Sconsigliamo di avvicinarsi con carrelli della spesa troppo carichi", ha dichiarato il Dott. Anelli, "la gravità potrebbe attrarre le vostre offerte speciali".
+            </p>
+        </article>
+    </section>
 
-      <h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
+    <!-- SEZIONE 2: CRONACA SURREALE -->
+    <section class="section" id="cronaca">
+        <h2>Cronaca</h2>
+        <article>
+            <h3>Semaforo si dichiara obiettore di coscienza: "Il rosso è troppo autoritario"</h3>
+             <div class="author">di Tuo Nome</div>
+            <p>
+                Caos nel traffico cittadino dopo che un semaforo all'incrocio principale ha smesso di funzionare, proiettando solo una luce color lavanda pallido. Interpellato da un nostro inviato, il dispositivo ha comunicato tramite codice Morse luminoso di "rifiutarsi di partecipare a un sistema basato su ordini e divieti cromatici". Gli automobilisti, dopo un'iniziale confusione, hanno organizzato un sit-in di solidarietà.
+            </p>
+        </article>
+    </section>
 
-      <div class="entry">
-        {{ post.excerpt }}
-      </div>
+    <!-- SEZIONE 3: CULTURA & PENSIERI -->
+    <section class="section" id="cultura">
+        <h2>Cultura & Commenti</h2>
+        <article>
+            <h3>La noia è la vera musa? Un'analisi non richiesta</h3>
+             <div class="author">di Tuo Nome</div>
+            <p>
+                In un'era di stimoli costanti, riflettiamo sul valore perduto della noia. Quella noia pura, immobile, che ti fissa dal muro bianco di fronte. Non è forse lì, nel vuoto pneumatico del non-fare, che nascono le idee più inutili e quindi più poetiche? Un elogio a quei pomeriggi passati a contare le crepe sul soffitto, vera e propria fucina di capolavori mancati.
+            </p>
+        </article>
+    </section>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
-    </article>
-  {% endfor %}
+    <!-- SEZIONE 4: L'ANGOLO DELLA POESIA -->
+    <section class="section" id="poesia">
+        <h2>L'Angolo del Poeta</h2>
+        <article>
+            <h3>Ode al tostapane</h3>
+             <div class="author">di Tuo Nome</div>
+            <p class="poem">
+                Oh, scatola di metallo che sospiri,
+                custode di fette pallide e stanche,
+                le trasformi in croccanti desideri,
+                anche se a volte le bruci, le amiche.
+
+                Un balzo improvviso, un colpo al cuore,
+                il pane è pronto, eroe del mattino.
+                Tu non chiedi nulla, solo un po' di calore,
+                e briciole sparse, questo è il tuo destino.
+            </p>
+        </article>
+    </section>
 </div>
