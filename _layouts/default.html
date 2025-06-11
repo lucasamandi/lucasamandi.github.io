@@ -3,174 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} - {{ site.title }}</title>
+    <title>{{ page.title }} | {{ site.title }}</title>
     
-    <!-- Importiamo i font per lo stile "giornale" da Google Fonts -->
+    <!-- Importiamo i font per lo stile "Repubblica" (Titillium per i titoli, Merriweather per il testo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Titillium+Web:wght@600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Stile Generale --- */
-        body {
-            background-color: #f8f5f0; /* Un bianco carta più caldo */
-            font-family: 'Merriweather', Georgia, serif; /* Font più leggibile e classico */
-            color: #1a1a1a;
-            margin: 0;
-            padding: 1em;
+        /* --- Variabili Colore e Stile Globale --- */
+        :root {
+            --repubblica-red: #c00;
+            --text-color: #333;
+            --link-color: #0056b3;
+            --border-color: #e5e5e5;
         }
 
-        /* --- Testata del Giornale (Masthead) --- */
+        body {
+            background-color: #fff;
+            font-family: 'Merriweather', serif;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Header in Stile Repubblica --- */
         .site-header {
-            text-align: center;
-            padding: 1em 0;
-            border-bottom: 1px solid #ccc;
-            margin-bottom: 2em;
+            background-color: #fff;
+            padding: 1em 5%;
+            border-bottom: 2px solid var(--repubblica-red);
         }
         
-        .masthead-top {
-            font-size: 0.8em;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1em;
+        .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: center; /* Centra il titolo */
             align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .site-title {
+            font-family: 'Titillium Web', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem); /* Dimensione reattiva */
+            font-weight: 700;
+            color: var(--repubblica-red);
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .site-nav {
+            width: 100%;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1em;
+            padding-top: 0.5em;
+            text-align: center;
+        }
+
+        .site-nav a {
+            font-family: 'Titillium Web', sans-serif;
+            text-decoration: none;
+            color: #444;
+            margin: 0 1em;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        /* --- Contenitore Principale --- */
+        .main-container {
+            max-width: 1280px;
+            margin: 2em auto;
             padding: 0 1em;
         }
 
-        .site-header h1 {
-            font-family: 'Playfair Display', "Times New Roman", serif; /* Font elegante per il titolo */
-            font-size: clamp(2.5rem, 10vw, 6rem); /* Dimensione fluida e reattiva */
-            font-weight: 700;
-            margin: 0.1em 0;
-            line-height: 1;
-            color: #111;
-        }
-
-        .site-header hr {
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-            margin: 1em 0;
-        }
-
-        /* --- Layout della Prima Pagina con CSS Grid --- */
+        /* --- Layout Griglia per gli articoli --- */
         .front-page-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* Griglia a 6 colonne per flessibilità */
-            gap: 2em;
-            grid-template-areas:
-                "hero hero hero hero spalla spalla"
-                "col1 col1 col2 col2 col3 col3";
+            grid-template-columns: repeat(12, 1fr); /* Griglia a 12 colonne */
+            gap: 1.5em;
         }
 
-        .article-hero { grid-area: hero; }
-        .article-spalla { grid-area: spalla; }
-        .column-1 { grid-area: col1; }
-        .column-2 { grid-area: col2; }
-        .column-3 { grid-area: col3; }
+        .hero-article {
+            grid-column: 1 / span 8; /* L'articolo eroe occupa 8 colonne */
+            border-right: 1px solid var(--border-color);
+            padding-right: 1.5em;
+        }
+
+        .sidebar {
+            grid-column: 9 / span 4; /* La sidebar occupa le restanti 4 */
+        }
         
-        .column-border {
-             border-left: 1px solid #ddd;
-             padding-left: 2em;
+        .sub-articles {
+            grid-column: 1 / -1; /* Occupa tutta la larghezza */
+            margin-top: 2em;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5em;
         }
 
-        /* --- Stile degli Articoli --- */
-        .article h2 { /* Titolo di sezione, es. "Prima Pagina" */
-            font-family: 'Merriweather', serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            border-bottom: 2px solid #333;
-            padding-bottom: 0.3em;
-            margin-top: 0;
-            margin-bottom: 1em;
-        }
-
-        .article h3 { /* Titolo dell'articolo */
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+        /* --- Stile Articoli --- */
+        .article h2 { /* Titolo dell'articolo */
+            font-family: 'Titillium Web', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             line-height: 1.1;
-            margin-top: 0;
-            margin-bottom: 0.2em;
+            margin: 0 0 0.3em 0;
+            font-weight: 700;
         }
         
-        .article-spalla h3, .column-1 h3, .column-2 h3, .column-3 h3 {
-             font-size: 1.6rem; /* Titoli più piccoli per colonne secondarie */
-        }
-        
-        .article .author {
-            font-style: italic;
-            color: #555;
-            margin-bottom: 1em;
+        .article .category {
+            font-family: 'Titillium Web', sans-serif;
+            font-weight: 600;
+            color: var(--repubblica-red);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 0.5em;
         }
 
         .article p {
-            text-align: justify;
+            font-size: 1.1rem;
             line-height: 1.7;
-            margin: 0 0 1em 0;
+            text-align: justify;
         }
-
-        .article .lead { /* Primo paragrafo in evidenza */
-            font-size: 1.1em;
-            font-weight: 700;
-            color: #333;
+        
+        /* Stili ridotti per articoli secondari */
+        .sidebar .article h2, .sub-articles .article h2 {
+            font-size: 1.5rem;
         }
         
         .poem {
-            white-space: pre-wrap;
+            font-family: 'Merriweather', serif;
             font-style: italic;
-            padding-left: 20px;
-            border-left: 3px solid #ccc;
+            white-space: pre-wrap;
             line-height: 1.8;
+            padding: 1em;
+            background-color: #f9f9f9;
+            border-left: 3px solid var(--repubblica-red);
         }
 
-
-        /* --- Adattabilità per schermi piccoli (Mobile) --- */
-        @media (max-width: 1024px) {
-            .front-page-grid {
-                grid-template-columns: 1fr; /* Una sola colonna */
-                grid-template-areas:
-                    "hero"
-                    "spalla"
-                    "col1"
-                    "col2"
-                    "col3";
+        /* --- Responsività --- */
+        @media (max-width: 900px) {
+            .hero-article {
+                grid-column: 1 / -1;
+                border-right: none;
+                padding-right: 0;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 1.5em;
             }
-            .column-border {
-                border-left: none;
-                padding-left: 0;
-                margin-top: 2em;
-                padding-top: 2em;
-                border-top: 1px solid #ddd;
+            .sidebar {
+                grid-column: 1 / -1;
+                margin-top: 1.5em;
+            }
+            .sub-articles {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-
     <header class="site-header">
-        <div class="masthead-top">
-            <span class="slogan">{{ site.description }}</span>
-            <span class="date" id="current-date"></span>
+        <div class="header-content">
+            <a href="/" class="site-title">{{ site.title }}</a>
         </div>
-        <h1>{{ site.title }}</h1>
-        <hr>
+        <nav class="site-nav">
+            <a href="#prima-pagina">Prima Pagina</a>
+            <a href="#cronaca-surreale">Cronaca</a>
+            <a href="#cultura">Cultura</a>
+            <a href="#poesia">Poesia</a>
+        </nav>
     </header>
 
-    <main>
-        <!-- Jekyll inserirà qui il contenuto specifico della pagina (il nostro index.md) -->
-        {{ content }}
-    </main>
-    
-    <script>
-        const dateElement = document.getElementById('current-date');
-        const today = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        dateElement.textContent = today.toLocaleDateString('it-IT', options);
-    </script>
-
+    <div class="main-container">
+        <main>
+            <!-- Jekyll inserirà qui il contenuto della pagina -->
+            {{ content }}
+        </main>
+    </div>
 </body>
 </html>
