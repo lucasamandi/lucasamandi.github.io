@@ -3,171 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page.title }} | {{ site.newspaper_title }}</title>
+    <title>{{ site.newspaper_title }} | {{ page.title }}</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Variabili e Stile Globale --- */
         :root {
+            --header-bg: #222;
+            --header-text: #fff;
+            --accent-color: #d00; /* Un rosso per i dettagli */
+            --border-color: #e0e0e0;
             --title-font: 'Playfair Display', serif;
             --text-font: 'Roboto', sans-serif;
-            --main-color: #333;
-            --border-color: #e0e0e0;
         }
         body {
             font-family: var(--text-font);
-            color: var(--main-color);
             margin: 0;
-            background-color: #fdfdfd;
+            background-color: #fff;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 1.5em; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5em; }
 
-        /* --- Testata a 3 Livelli --- */
-        .site-header { border-bottom: 1px solid var(--border-color); }
-        
-        /* 1. Barra Superiore (Avatar e Slogan) */
-        .header-top-bar {
+        /* --- TESTATA UNIFICATA STILE "REPUBBLICA" --- */
+        .site-header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1.5em 0;
+            border-bottom: 4px solid var(--accent-color);
+        }
+        .header-grid {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.5em 0;
-            background-color: #f7f7f7;
-            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1em;
         }
-        .top-bar-container { display: flex; justify-content: space-between; align-items: center; width: 100%;}
+
+        /* Avatar e Slogan a sinistra */
         .author-info { display: flex; align-items: center; }
         .author-info img {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            margin-right: 10px;
-            border: 2px solid #ccc;
+            margin-right: 12px;
+            border: 2px solid #555;
         }
-        .author-info .slogan { font-weight: 500; color: #555; }
-
-        /* 2. Testata Principale (Titolo) */
-        .masthead {
-            text-align: center;
-            padding: 1.5em 0;
-        }
+        .slogan { font-weight: 500; font-size: 0.9rem; }
+        
+        /* Titolo centrale */
         .newspaper-title {
             font-family: var(--title-font);
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            color: #111;
+            font-weight: 900;
+            font-size: clamp(2rem, 6vw, 3rem);
+            line-height: 1;
+            text-align: center;
+            color: var(--header-text);
             margin: 0;
-            font-weight: 700;
+            /* Per farlo andare a capo su mobile */
+            width: 100%;
+            order: -1; /* Lo mette in cima su mobile */
         }
 
-        /* 3. Barra di Navigazione (Menu Categorie) */
-        .header-nav-bar {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            position: relative;
-        }
-        
-        /* Menu a Ventaglio (Dropdown) */
+        /* Menu Categorie a destra */
         .category-menu { position: relative; }
         .menu-toggle-button {
             font-family: var(--text-font);
             font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            background-color: #333;
-            color: #fff;
-            padding: 0.8em 1.5em;
+            background: var(--header-text);
+            color: var(--header-bg);
             border: none;
+            padding: 0.8em 1.5em;
             cursor: pointer;
-            transition: background-color 0.2s;
+            text-transform: uppercase;
         }
-        .menu-toggle-button:hover { background-color: #555; }
         .menu-dropdown {
-            display: none; /* Nascosto di default */
-            position: absolute;
-            right: 0;
-            top: 100%;
-            background-color: white;
-            min-width: 220px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 10;
-            border: 1px solid #ddd;
+            display: none; position: absolute; right: 0; top: 100%;
+            background-color: white; min-width: 220px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); z-index: 10;
         }
-        .menu-dropdown a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
+        .menu-dropdown a { color: black; padding: 12px 16px; text-decoration: none; display: block; }
         .menu-dropdown a:hover { background-color: #f1f1f1; }
-        .show { display: block; } /* Classe per mostrare il menu */
+        .show { display: block; }
+
+        /* Adattamenti per schermi grandi */
+        @media (min-width: 769px) {
+            .newspaper-title { order: 0; width: auto; }
+        }
 
         /* --- Contenuto della pagina --- */
+        main { padding-top: 2em; }
+        .section { margin-bottom: 3em; }
         .section-title {
             font-family: var(--title-font);
             font-size: 2rem;
-            border-bottom: 3px solid var(--main-color);
+            border-bottom: 3px solid #333;
             padding-bottom: 0.2em;
             margin-bottom: 1em;
         }
         .article-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2em;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2em;
         }
-        .article h3 { font-family: var(--title-font); font-size: 1.5rem; margin-top: 0; }
+        .article h3 { font-family: var(--title-font); font-size: 1.5rem; margin: 0 0 0.5em 0; }
         .article .author { font-style: italic; color: #666; margin-bottom: 1em; display: block; }
         .article p { line-height: 1.6; }
-        .poem { white-space: pre-wrap; font-style: italic; border-left: 2px solid #ccc; padding-left: 1em; line-height: 1.7; }
-        
         .read-more-button {
-            display: inline-block;
-            margin-top: 1em;
-            font-weight: 700;
-            text-decoration: none;
-            color: #0056b3;
-            padding: 0.5em 0;
-            border-bottom: 2px solid transparent;
+            display: inline-block; margin-top: 1em; font-weight: 700; text-decoration: none;
+            color: #0056b3; padding-bottom: 2px; border-bottom: 2px solid transparent;
             transition: border-color 0.2s;
         }
         .read-more-button:hover { border-bottom-color: #0056b3; }
-        
-        @media (max-width: 600px) {
-            .header-top-bar { flex-direction: column; }
-        }
     </style>
 </head>
 <body>
 
     <header class="site-header">
-        <div class="header-top-bar">
-            <div class="container top-bar-container">
+        <div class="container">
+            <div class="header-grid">
                 <div class="author-info">
-                    <!-- SOSTITUISCI CON L'URL DEL TUO AVATAR -->
-                    <img src="https://m.media-amazon.com/images/S/amzn-author-media-prod/3mj51fgim77sj28mnepjm264p6._SX450_CR0%2C0%2C450%2C450_.jpg" alt="Avatar dell'autore">
+                    <img src="/avatar.png" alt="Avatar dell'autore">
                     <span class="slogan">{{ site.slogan }}</span>
                 </div>
-                <div class="date" id="current-date"></div>
-            </div>
-        </div>
-
-        <div class="masthead">
-            <h1 class="newspaper-title">{{ site.newspaper_title }}</h1>
-        </div>
-
-        <div class="header-nav-bar">
-             <div class="container" style="display: flex; justify-content: flex-end;">
+                
+                <h1 class="newspaper-title">{{ site.newspaper_title }}</h1>
+                
                 <div class="category-menu">
                     <button id="menu-toggle" class="menu-toggle-button">Categorie</button>
                     <div id="menu-dropdown" class="menu-dropdown">
-                        <a href="#">Surrealismo</a>
-                        <a href="#">Satira</a>
-                        <a href="#">Cronaca Nera (di seppia)</a>
-                        <a href="#">Riflessioni</a>
-                        <a href="#">Poesie</a>
+                        <a href="/category/prima-pagina.html">Prima Pagina</a>
+                        <a href="/category/cronaca.html">Cronaca Surreale</a>
+                        <a href="/category/poesia.html">Poesie</a>
+                        <!-- Aggiungi altri link qui -->
                     </div>
                 </div>
             </div>
@@ -179,29 +145,15 @@
     </main>
 
     <script>
-        // Script per la data
-        const dateElement = document.getElementById('current-date');
-        if (dateElement) {
-            const today = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateElement.textContent = today.toLocaleDateString('it-IT', options);
-        }
-
-        // Script per il menu a ventaglio
         const menuToggle = document.getElementById('menu-toggle');
         const menuDropdown = document.getElementById('menu-dropdown');
-
-        menuToggle.addEventListener('click', function(event) {
-            event.stopPropagation(); // Evita che il click si propaghi al 'document'
+        menuToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
             menuDropdown.classList.toggle('show');
         });
-
-        // Chiude il menu se si clicca fuori
-        document.addEventListener('click', function(event) {
-            if (!menuToggle.contains(event.target)) {
-                if (menuDropdown.classList.contains('show')) {
-                    menuDropdown.classList.remove('show');
-                }
+        document.addEventListener('click', (event) => {
+            if (menuDropdown.classList.contains('show')) {
+                menuDropdown.classList.remove('show');
             }
         });
     </script>
