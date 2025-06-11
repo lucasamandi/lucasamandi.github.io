@@ -1,6 +1,8 @@
 ---
 layout: post
-title:  "Interrogato piccione "
+title: "Interrogato piccione"
+date: 2023-10-11
+category: 'prima-pagina'  # <-- QUESTA RIGA È FONDAMENTALE!
 ---
 
 Milano. Mattinata di scompiglio in Piazza Duomo, dove un piccione, reo di aver attraversato la traiettoria di un pensiero particolarmente profondo del signor Gualtiero, è stato fermato e condotto in caserma per accertamenti. 
