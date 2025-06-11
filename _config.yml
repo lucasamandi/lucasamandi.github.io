@@ -2,14 +2,14 @@
 # This file contains configuration flags to customize your site
 #
 
-# Name of your site (displayed in the header)
-name: L'araldo surreale
+# Questo titolo non è più usato nel layout, ma è utile per Jekyll
+title: Il Mio Blog Surreale
 
-# Short bio or description (displayed in the header)
-description: Scrivo cose.
+# Lo slogan che appare accanto all'avatar
+slogan: Scrivo cose.
 
-# URL of your avatar or profile pic (you could use your GitHub profile pic)
-avatar: https://images-na.ssl-images-amazon.com/images/S/amzn-author-media-prod/3mj51fgim77sj28mnepjm264p6._UX135_CR0,0,135,135_.jpg
+# IL TITOLO PRINCIPALE DEL GIORNALE
+newspaper_title: L'Araldo Surreale
 
 #
 # Flags below are optional
