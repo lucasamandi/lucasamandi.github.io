@@ -1,51 +1,104 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Il titolo verrà gestito da Jekyll -->
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <style>
+        /* --- Stile Generale --- */
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #f4f1ea; /* Colore carta invecchiata */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
 
-    {% include meta.html %}
+        /* --- Intestazione del Giornale --- */
+        .newspaper-header {
+            text-align: center;
+            border-bottom: 4px double #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
 
-    <!--[if lt IE 9]>
-      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        .newspaper-header h1 {
+            font-size: 5vw; /* Dimensione fluida */
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
-    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
+        .newspaper-header .subtitle {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #555;
+        }
+        
+        .newspaper-header .date {
+            font-size: 1em;
+            color: #777;
+        }
 
-    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-  </head>
+        /* --- Struttura Principale e Articoli --- */
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
 
-  <body>
-    <div class="wrapper-masthead">
-      <div class="container">
-        <header class="masthead clearfix">
-          <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
+        .section {
+            padding: 15px;
+            border-left: 1px solid #ccc;
+            padding-left: 25px;
+        }
+        
+        .section:first-child { border-left: none; padding-left: 0; }
 
-          <div class="site-info">
-            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-            <p class="site-description">{{ site.description }}</p>
-          </div>
+        .section h2 {
+            font-size: 1.8em;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
 
-          <nav>
-            <a href="{{ site.baseurl }}/">Blog</a>
-            <a href="{{ site.baseurl }}/about">About</a>
-          </nav>
-        </header>
-      </div>
-    </div>
+        .article h3 { font-size: 1.4em; margin-bottom: 5px; }
+        .article .author { font-style: italic; color: #666; margin-bottom: 15px; font-size: 0.9em; }
+        .article p { text-align: justify; line-height: 1.6; margin-bottom: 20px; }
+        .poem { white-space: pre-wrap; font-style: italic; padding-left: 20px; border-left: 3px solid #ddd; }
 
-    <div id="main" role="main" class="container">
-      {{ content }}
-    </div>
+        /* --- Responsività --- */
+        @media (max-width: 900px) {
+            .main-content { grid-template-columns: 1fr; }
+            .section { border-left: none; padding-left: 0; border-bottom: 1px solid #ccc; padding-bottom: 20px; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
 
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include svg-icons.html %}
-        </footer>
-      </div>
-    </div>
+    <header class="newspaper-header">
+        <!-- Usa i valori dal file _config.yml -->
+        <h1>{{ site.title }}</h1>
+        <div class="subtitle">{{ site.description }}</div>
+        <div class="date" id="current-date"></div>
+    </header>
 
-    {% include analytics.html %}
-  </body>
+    <main>
+        <!--
+        QUESTO È IL PUNTO MAGICO!
+        Jekyll inserirà qui il contenuto specifico di ogni pagina.
+        -->
+        {{ content }}
+    </main>
+    
+    <script>
+        const dateElement = document.getElementById('current-date');
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = today.toLocaleDateString('it-IT', options);
+    </script>
+
+</body>
 </html>
